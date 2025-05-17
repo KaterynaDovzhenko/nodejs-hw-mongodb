@@ -20,8 +20,10 @@ export function setupServer() {
   );
 
   app.get('/', (req, res) => {
-    res.json({
+    res.status(200).json({
+      status: 200,
       message: 'Hello World!',
+      data: null,
     });
   });
 
@@ -29,6 +31,7 @@ export function setupServer() {
     const contacts = await getAllContacts();
 
     res.status(200).json({
+      status: 200,
       message: 'Contacts successfully retrieved',
       data: contacts,
     });
@@ -40,11 +43,14 @@ export function setupServer() {
 
     if (!contact) {
       return res.status(404).json({
+        status: 404,
         message: "Contact wasn't found, try again :(",
+        data: null,
       });
     }
 
     res.status(200).json({
+      status: 200,
       message: 'Contact successfully retrieved',
       data: contact,
     });
@@ -52,14 +58,17 @@ export function setupServer() {
 
   app.use((req, res) => {
     res.status(404).json({
+      status: 404,
       message: 'Route not found',
+      data: null,
     });
   });
 
   app.use((err, req, res, next) => {
     res.status(500).json({
+      status: 500,
       message: 'Something went wrong (',
-      error: err.message,
+      data: { error: err.message },
     });
   });
 
