@@ -29,6 +29,7 @@ export function setupServer() {
     const contacts = await getAllContacts();
 
     res.status(200).json({
+      message: 'Contacts successfully retrieved',
       data: contacts,
     });
   });
@@ -44,6 +45,7 @@ export function setupServer() {
     }
 
     res.status(200).json({
+      message: 'Contact successfully retrieved',
       data: contact,
     });
   });
