@@ -30,9 +30,7 @@ export const updateContact = async (contactId, payload) => {
     return null;
   }
 
-  return {
-    contact,
-  };
+  return contact;
 };
 
 export const deleteContact = async (contactId) => {
