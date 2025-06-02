@@ -1,5 +1,3 @@
-import createHttpError from 'http-errors';
-
 export function validateBody(schema) {
   return async (req, res, next) => {
     try {
@@ -9,7 +7,11 @@ export function validateBody(schema) {
       next();
     } catch (err) {
       const errors = err.details.map((detail) => detail.message);
-      next(createHttpError.BadRequest(errors));
+
+      res.status(400).json({
+        message: 'Validation failed',
+        details: errors,
+      });
     }
   };
 }
