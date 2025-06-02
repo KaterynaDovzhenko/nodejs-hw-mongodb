@@ -31,7 +31,7 @@ function parseSortOrder(value) {
   return value;
 }
 
-export function praseSortParams(query) {
+export function parseSortParams(query) {
   const { sortBy, sortOrder } = query;
 
   const parsedSortBy = parseSortBy(sortBy);
