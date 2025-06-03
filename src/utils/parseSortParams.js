@@ -25,10 +25,10 @@ function parseSortOrder(value) {
     return 'asc';
   }
 
-  if (value !== 'asc' || value !== 'desc') {
-    return 'asc';
+  if (value === 'asc' || value === 'desc') {
+    return value;
   }
-  return value;
+  return 'asc';
 }
 
 export function parseSortParams(query) {
