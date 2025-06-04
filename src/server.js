@@ -2,8 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
-import contactsRouter from './routers/contacts.js';
+import contactsRouter from './routes/contacts.js';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -14,6 +15,8 @@ const PORT = Number(getEnvVar('PORT', '7070'));
 
 export function setupServer() {
   const app = express();
+
+  app.use(cookieParser());
 
   app.use(
     express.json({
