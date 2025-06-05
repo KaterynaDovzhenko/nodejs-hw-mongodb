@@ -4,7 +4,8 @@ import pino from 'pino-http';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
-import contactsRouter from './routes/contacts.js';
+// import contactsRouter from './routes/contacts.js';
+import router from './routes/index.js';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -39,7 +40,7 @@ export function setupServer() {
     });
   });
 
-  app.use(contactsRouter);
+  app.use('/api', router);
 
   app.use(notFoundHandler);
 

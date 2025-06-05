@@ -7,7 +7,7 @@ export async function auth(req, res, next) {
 
   if (typeof authorization !== 'string') {
     return next(
-      new createHttpError.Unauthorized('PLease provide access token'),
+      new createHttpError.Unauthorized('Please provide access token'),
     );
   }
 
@@ -15,7 +15,7 @@ export async function auth(req, res, next) {
 
   if (bearer !== 'Bearer' || typeof accessToken !== 'string') {
     return next(
-      new createHttpError.Unauthorized('PLease provide access token'),
+      new createHttpError.Unauthorized('Please provide access token'),
     );
   }
 
