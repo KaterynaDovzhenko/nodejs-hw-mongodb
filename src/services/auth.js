@@ -12,7 +12,7 @@ export async function registerUser(payload) {
   const user = await User.findOne({ email: payload.email });
 
   if (user !== null) {
-    throw new createHttpError.Conflict('Email is already in use');
+    throw new createHttpError(409, 'Email is already in use');
   }
 
   payload.password = await bcrypt.hash(payload.password, 10);
