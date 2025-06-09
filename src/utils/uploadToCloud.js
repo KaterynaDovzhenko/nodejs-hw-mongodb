@@ -1,6 +1,6 @@
 import cloudinary from 'cloudinary';
 
-import { getEnvVar } from './getEnvVar';
+import { getEnvVar } from './getEnvVar.js';
 
 cloudinary.v2.config({
   cloud_name: getEnvVar('CLOUDINARY_CLOUD_NAME'),
