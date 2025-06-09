@@ -1,4 +1,4 @@
-import * as fs from 'node :fs/promises';
+import * as fs from 'node:fs';
 import path from 'node:path';
 
 import createHttpError from 'http-errors';
