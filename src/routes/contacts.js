@@ -6,6 +6,7 @@ import {
   patchContactController,
   deleteContactController,
 } from '../controllers/contacts.js';
+
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
@@ -14,12 +15,15 @@ import {
   updateContactSchema,
 } from '../validation/contacts.js';
 
+import { upload } from '../middlewares/upload.js';
+
 const router = Router();
 
 router.get('/', ctrlWrapper(getContactsController));
 router.get('/:contactId', isValidId, ctrlWrapper(getContactByIdController));
 router.post(
   '/',
+  upload.single('avatar'),
   validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );

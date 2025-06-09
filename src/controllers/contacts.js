@@ -1,3 +1,6 @@
+import * as fs from 'node :fs/promises';
+import path from 'node:path';
+
 import createHttpError from 'http-errors';
 import {
   getAllContacts,
@@ -10,6 +13,9 @@ import {
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
+
+import { uploadToCloud } from '../utils/uploadToCloud.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
 
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -60,7 +66,27 @@ export const getContactByIdController = async (req, res, next) => {
 };
 
 export const createContactController = async (req, res) => {
-  const contact = await createContact({ ...req.body, userId: req.user.id });
+  let avatar = null;
+
+  if (getEnvVar('UPLOAD_TO_CLOUDINARY' === 'true')) {
+    const result = await uploadToCloud(req.file.path);
+
+    await fs.unlink(req.file.path);
+
+    avatar = result.secure_url;
+  } else {
+    await fs.rename(
+      req.file.path,
+      path.resolve('src', 'uploads', 'avatars', req.file.filename),
+    );
+    avatar = `http://localhost:7070/avatars/${req.file.filename}`;
+  }
+
+  const contact = await createContact({
+    ...req.body,
+    userId: req.user.id,
+    avatar,
+  });
 
   res.status(201).json({
     status: 201,

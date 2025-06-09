@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
 import router from './routes/index.js';
+import path from 'node:path';
 
 import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -15,6 +16,11 @@ const PORT = Number(getEnvVar('PORT', '7070'));
 
 export function setupServer() {
   const app = express();
+
+  app.use(
+    '/avatars',
+    express.static(path.resolve('src', 'uploads', 'avatars')),
+  );
 
   app.use(cookieParser());
 
