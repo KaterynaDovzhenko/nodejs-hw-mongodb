@@ -11,5 +11,5 @@
 /src/tmp/*
 !/src/tmp/.gitkeep
 
-/src/uploads/avatars/*
-!/src/uploads/avatars/*
+/src/uploads/photos/*
+!/src/uploads/photos/*

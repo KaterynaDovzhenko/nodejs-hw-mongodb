@@ -100,7 +100,7 @@ export async function requestResetPassword(email) {
     },
     getEnvVar('JWT_SECRET'),
     {
-      expiresIn: '15m',
+      expiresIn: '5m',
     },
   );
   const template = Handlebars.compile(RESET_PASSWORD_TEMPLATE);

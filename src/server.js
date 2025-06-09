@@ -17,10 +17,7 @@ const PORT = Number(getEnvVar('PORT', '7070'));
 export function setupServer() {
   const app = express();
 
-  app.use(
-    '/avatars',
-    express.static(path.resolve('src', 'uploads', 'avatars')),
-  );
+  app.use('/photos', express.static(path.resolve('src', 'uploads', 'photos')));
 
   app.use(cookieParser());
 
