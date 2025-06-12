@@ -1,4 +1,5 @@
-import * as fs from 'node:fs';
+// import * as fs from 'node:fs';
+import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
 import createHttpError from 'http-errors';
@@ -65,34 +66,43 @@ export const getContactByIdController = async (req, res, next) => {
   });
 };
 
-export const createContactController = async (req, res) => {
+export const createContactController = async (req, res, next) => {
   let photo = null;
 
-  if (getEnvVar('UPLOAD_TO_CLOUDINARY') === 'true') {
-    const result = await uploadToCloud(req.file.path);
+  try {
+    if (getEnvVar('UPLOAD_TO_CLOUDINARY') === 'true') {
+      const result = await uploadToCloud(req.file.path);
+      await fs.unlink(req.file.path);
+      photo = result.secure_url;
+    } else {
+      await fs.rename(
+        req.file.path,
+        path.resolve('src', 'uploads', 'photos', req.file.filename),
+      );
+      photo = `http://localhost:7070/photos/${req.file.filename}`;
+    }
 
-    await fs.unlink(req.file.path);
+    const contact = await createContact({
+      ...req.body,
+      userId: req.user.id,
+      photo,
+    });
 
-    photo = result.secure_url;
-  } else {
-    await fs.rename(
-      req.file.path,
-      path.resolve('src', 'uploads', 'photos', req.file.filename),
-    );
-    photo = `http://localhost:7070/photos/${req.file.filename}`;
+    res.status(201).json({
+      status: 201,
+      message: 'Successfully created a contact! :)',
+      data: contact,
+    });
+  } catch (error) {
+    console.error('Create contact error:', error);
+
+    // Відповідь клієнту з кодом помилки
+    res.status(500).json({
+      status: 500,
+      message: 'Failed to create contact',
+      error: error.message || 'Unknown error',
+    });
   }
-
-  const contact = await createContact({
-    ...req.body,
-    userId: req.user.id,
-    photo,
-  });
-
-  res.status(201).json({
-    status: 201,
-    message: 'Successfully created a contact! :)',
-    data: contact,
-  });
 };
 
 export const patchContactController = async (req, res, next) => {
