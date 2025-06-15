@@ -70,16 +70,18 @@ export const createContactController = async (req, res, next) => {
   let photo = null;
 
   try {
-    if (getEnvVar('UPLOAD_TO_CLOUDINARY') === 'true') {
-      const result = await uploadToCloud(req.file.path);
-      await fs.unlink(req.file.path);
-      photo = result.secure_url;
-    } else {
-      await fs.rename(
-        req.file.path,
-        path.resolve('src', 'uploads', 'photos', req.file.filename),
-      );
-      photo = `http://localhost:7070/photos/${req.file.filename}`;
+    if (req.file) {
+      if (getEnvVar('UPLOAD_TO_CLOUDINARY') === 'true') {
+        const result = await uploadToCloud(req.file.path);
+        await fs.unlink(req.file.path);
+        photo = result.secure_url;
+      } else {
+        await fs.rename(
+          req.file.path,
+          path.resolve('src', 'uploads', 'photos', req.file.filename),
+        );
+        photo = `http://localhost:7070/photos/${req.file.filename}`;
+      }
     }
 
     const contact = await createContact({
@@ -96,7 +98,6 @@ export const createContactController = async (req, res, next) => {
   } catch (error) {
     console.error('Create contact error:', error);
 
-    // Відповідь клієнту з кодом помилки
     res.status(500).json({
       status: 500,
       message: 'Failed to create contact',
@@ -120,8 +121,8 @@ export const patchContactController = async (req, res, next) => {
         req.file.path,
         path.resolve('src', 'uploads', 'photos', req.file.filename),
       );
+      photo = `http://localhost:7070/photos/${req.file.filename}`;
     }
-    photo = `http://localhost:7070/photos/${req.file.filename}`;
   }
 
   const updateData = { ...req.body };
