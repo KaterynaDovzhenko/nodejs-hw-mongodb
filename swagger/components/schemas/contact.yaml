@@ -1,0 +1,57 @@
+type: object
+required:
+  - _id
+  - name
+  - phoneNumber
+  - email
+  - isFavourite
+  - contactType
+  - ownerId
+  - avatar
+  - createdAt
+  - updatedAt
+properties:
+  _id:
+    type: string
+    description: contact id
+    example: 507/191e810c19729de860ea
+  name:
+    type: string
+    description: Contact name
+    example: Nick White
+  phoneNumber:
+    type: string
+    description: Phone contact
+    example: +16462235667
+  email:
+    type: string
+    description: Email contact
+    example: nick.white@gmail.com
+  isFavourite:
+    type: boolean
+    description: Contact favourite
+    example: false
+    default: false
+  contactType:
+    type: string
+    description: Contact type
+    enum: ['work', 'home', 'personal']
+    example: home
+  ownerId:
+    type: string
+    description: contact user id
+    example: 684173599abba11274e4c268
+  avatar:
+    type: string
+    description: Contact avatar
+    example: https://res.cloudinary.com/dha4xvgfi/image/upload/v1749060633/mef8zwaq73iedpo4owut.png%7C
+  createdAt:
+    type: string
+    format: date-time
+    description: Contact was created at
+    example: 2025-03-2719:43:21.686+00:00
+  updatedAt:
+    type: string
+    format: date-time
+    description: Contact was updated at
+    example: 2025-03-2719:43:21.686+00:00
