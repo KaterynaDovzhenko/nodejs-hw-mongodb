@@ -23,9 +23,7 @@ const PORT = Number(getEnvVar('PORT', '7070'));
 export function setupServer() {
   const app = express();
 
-  if (process.env.NODE_ENV === 'development') {
-    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCUMENT));
-  }
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCUMENT));
 
   app.use('/photos', express.static(path.resolve('src', 'uploads', 'photos')));
 
