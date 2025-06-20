@@ -37,10 +37,10 @@ requestBody:
             description: Contact type
             enum: ['work', 'home', 'personal']
             example: home
-          avatar:
+          photo:
             type: string
             format: binary
-            description: Contact avatar
+            description: Contact photo
             example: https://res.cloudinary.com/dha4xvgfi/image/upload/v1749060633/mef8zwaq73iedpo4owut.png%7C
 responses:
   '201':
@@ -61,8 +61,8 @@ responses:
               type: string
               example: Contact created successfully
             data:
-              $ref: ../../../components/schemas/contact.yaml
+              $ref: ../../components/schemas/contact.yaml
   '401':
-    $ref: ../../../components/responses/401.yaml
+    $ref: ../../components/responses/401.yaml
   '500':
-    $ref: ../../../components/responses/500.yaml
+    $ref: ../../components/responses/500.yaml

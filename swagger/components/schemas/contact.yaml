@@ -7,7 +7,7 @@ required:
   - isFavourite
   - contactType
   - ownerId
-  - avatar
+  - photo
   - createdAt
   - updatedAt
 properties:
@@ -41,9 +41,9 @@ properties:
     type: string
     description: contact user id
     example: 684173599abba11274e4c268
-  avatar:
+  photo:
     type: string
-    description: Contact avatar
+    description: Contact photo
     example: https://res.cloudinary.com/dha4xvgfi/image/upload/v1749060633/mef8zwaq73iedpo4owut.png%7C
   createdAt:
     type: string
