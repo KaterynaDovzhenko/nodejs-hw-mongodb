@@ -480,7 +480,7 @@
           "email",
           "isFavourite",
           "contactType",
-          "ownerId",
+          "userId",
           "photo",
           "createdAt",
           "updatedAt"
@@ -518,7 +518,7 @@
             "enum": ["work", "home", "personal"],
             "example": "home"
           },
-          "ownerId": {
+          "userId": {
             "type": "string",
             "description": "contact user id",
             "example": "684173599abba11274e4c268"
