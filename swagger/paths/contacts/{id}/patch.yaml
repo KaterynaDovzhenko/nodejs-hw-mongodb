@@ -17,7 +17,10 @@ requestBody:
     multipart/form-data:
       schema:
         type: object
-        required: []
+        required:
+          - name
+          - phoneNumber
+          - contactType
         properties:
           name:
             type: string
@@ -42,9 +45,8 @@ requestBody:
             example: personal
           photo:
             type: string
-            format: url
-            description: Contact photo url
-            example: https://res.cloudinary.com/df5xsxnzm/image/upload/v1749232498/jpolliyga4egrctz965w.jpg
+            format: binary
+            description: Contact photo
 responses:
   '200':
     description: Contact updated
