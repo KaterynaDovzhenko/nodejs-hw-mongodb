@@ -1,59 +1,30 @@
 tags:
   - Contacts
-summary: Update contacts
+summary: Update contact by ID
 operationId: updateContact
-description: Update contacts
+description: Update selected fields of a contact
 security:
   - bearerAuth: []
 parameters:
-  - in: path
-    name: id
+  - name: id
+    in: path
     required: true
     schema:
       type: string
       example: 6841738d9abba11274e4c270
 requestBody:
+  required: true
   content:
     multipart/form-data:
       schema:
-        type: object
-        properties:
-          name:
-            type: string
-            description: Contact name
-            example: Nick White
-          phoneNumber:
-            type: string
-            description: Phone contact
-            example: +17674455643
-          email:
-            type: string
-            description: Email contact
-            example: nick.white@gmail.com
-          isFavourite:
-            type: boolean
-            description: Contact favourite
-            example: false
-          contactType:
-            type: string
-            description: Contact type
-            enum: ['work', 'home', 'personal']
-            example: personal
-          photo:
-            type: string
-            format: binary
-            description: Contact photo
+        $ref: ../../../components/schemas/UpdateContact.yaml
 responses:
   '200':
-    description: Contact updated
+    description: Contact updated successfully
     content:
       application/json:
         schema:
           type: object
-          required:
-            - status
-            - message
-            - data
           properties:
             status:
               type: integer
@@ -62,7 +33,9 @@ responses:
               type: string
               example: Contact updated
             data:
-              $ref: ../../../components/schemas/contact.yaml
+              $ref: ../../../components/schemas/Contact.yaml
+  '404':
+    description: Contact not found
   '401':
     $ref: ../../../components/responses/401.yaml
   '500':

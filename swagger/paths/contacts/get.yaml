@@ -1,8 +1,8 @@
 tags:
   - Contacts
-summary: Get all contacts
+summary: Get all contacts with pagination
 operationId: getAllContacts
-description: Get all contacts
+description: Get all contacts with filters and pagination
 security:
   - bearerAuth: []
 parameters:
@@ -11,25 +11,26 @@ parameters:
     required: false
     schema:
       type: integer
-      example: 1
+      default: 1
   - name: perPage
     in: query
     required: false
     schema:
       type: integer
-      example: 10
+      default: 10
   - name: sortOrder
     in: query
+    required: false
     schema:
       type: string
-      enum: ['asc', 'desc']
+      enum: [asc, desc]
       example: asc
   - name: sortBy
     in: query
     required: false
     schema:
       type: string
-      example: contactType
+      example: name
   - name: isFavourite
     in: query
     required: false
@@ -41,19 +42,15 @@ parameters:
     required: false
     schema:
       type: string
-      enum: ['home', 'work', 'personal']
+      enum: [home, work, personal]
       example: home
 responses:
   '200':
-    description: Get all contacts
+    description: Successfully retrieved contacts
     content:
       application/json:
         schema:
           type: object
-          required:
-            - status
-            - message
-            - data
           properties:
             status:
               type: integer
@@ -62,7 +59,26 @@ responses:
               type: string
               example: Successfully found contacts!
             data:
-              $ref: ../../components/schemas/contact.yaml
+              type: object
+              required:
+                - contacts
+                - total
+                - page
+                - perPage
+              properties:
+                contacts:
+                  type: array
+                  items:
+                    $ref: ../../components/schemas/Contact.yaml
+                total:
+                  type: integer
+                  example: 50
+                page:
+                  type: integer
+                  example: 1
+                perPage:
+                  type: integer
+                  example: 10
   '401':
     $ref: ../../components/responses/401.yaml
   '500':

@@ -1,0 +1,22 @@
+type: object
+properties:
+  name:
+    type: string
+    example: Nick White
+  phoneNumber:
+    type: string
+    example: +16462235667
+  email:
+    type: string
+    example: nick.white@gmail.com
+  isFavourite:
+    type: boolean
+    example: false
+  contactType:
+    type: string
+    enum: [work, home, personal]
+    example: home
+  photo:
+    type: string
+    format: binary
+required: []

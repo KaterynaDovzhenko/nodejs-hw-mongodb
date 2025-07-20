@@ -5,13 +5,13 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: <опис вашого додатку>
+  description: REST API for managing user contacts with authorization and filtering.
 tags:
   - name: Contacts
     description: Operation with contacts
 servers:
   - url: https://hw7-swagger-c2gv.onrender.com
-  # - url: #посилання на задеплоєний сайт
+
 paths:
   /contacts/{id}:
     get:
@@ -25,8 +25,19 @@ paths:
       $ref: '../swagger/paths/contacts/post.yaml'
     get:
       $ref: '../swagger/paths/contacts/get.yaml'
+
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+  schemas:
+    Contact:
+      $ref: '../swagger/components/schemas/Contact.yaml'
+    UpdateContact:
+      $ref: '../swagger/components/schemas/UpdateContact.yaml'
+  responses:
+    '401':
+      $ref: '../swagger/components/responses/401.yaml'
+    '500':
+      $ref: '../swagger/components/responses/500.yaml'
